@@ -347,11 +347,20 @@ async def handle(proxies, outfile, format):
             if is_json:
                 line = '%s' % json.dumps(proxy.as_json())
             else:
-                line = '%r\n' % proxy
+                line = '{type_}://{host}:{port}\n'.format(
+                    type_=sorted(
+                        map(str.lower, proxy.types),
+                        key=lambda x: ['socks5', 'socks4', 'https', 'http'].index(x)
+                    )[0],
+                    host=proxy.host,
+                    port=proxy.port,
+                )
 
             if is_json and not is_first:
                 outfile.write(',\n')
             outfile.write(line)
+            if outfile != sys.stdout:
+                sys.stdout.write(line)
             is_first = False
 
 
