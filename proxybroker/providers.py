@@ -103,6 +103,8 @@ class Provider:
 
     async def _find_on_page(self, url, data=None, headers=None, method='GET'):
         page = await self.get(url, data=data, headers=headers, method=method)
+        if not page:
+            return
         oldcount = len(self.proxies)
         try:
             received = self.find_proxies(page)
@@ -162,22 +164,22 @@ class Provider:
         return proxies
 
 
-class Freeproxylists_com(Provider):
-    domain = 'freeproxylists.com'
-
-    async def _pipe(self):
-        exp = r'''href\s*=\s*['"](?P<t>[^'"]*)/(?P<uts>\d{10})[^'"]*['"]'''
-        urls = [
-            'http://www.freeproxylists.com/socks.html',
-            'http://www.freeproxylists.com/elite.html',
-            'http://www.freeproxylists.com/anonymous.html',
-        ]
-        pages = await asyncio.gather(*[self.get(url) for url in urls])
-        params = re.findall(exp, ''.join(pages))
-        tpl = 'http://www.freeproxylists.com/load_{}_{}.html'
-        # example: http://www.freeproxylists.com/load_socks_1448724717.html
-        urls = [tpl.format(t, uts) for t, uts in params]
-        await self._find_on_pages(urls)
+# class Freeproxylists_com(Provider):
+#     domain = 'freeproxylists.com'
+#
+#     async def _pipe(self):
+#         exp = r'''href\s*=\s*['"](?P<t>[^'"]*)/(?P<uts>\d{10})[^'"]*['"]'''
+#         urls = [
+#             'http://www.freeproxylists.com/socks.html',
+#             'http://www.freeproxylists.com/elite.html',
+#             'http://www.freeproxylists.com/anonymous.html',
+#         ]
+#         pages = await asyncio.gather(*[self.get(url) for url in urls])
+#         params = re.findall(exp, ''.join(pages))
+#         tpl = 'http://www.freeproxylists.com/load_{}_{}.html'
+#         # example: http://www.freeproxylists.com/load_socks_1448724717.html
+#         urls = [tpl.format(t, uts) for t, uts in params]
+#         await self._find_on_pages(urls)
 
 
 class Blogspot_com_base(Provider):
@@ -213,6 +215,8 @@ class Webanetlabs_net(Provider):
     async def _pipe(self):
         exp = r'''href\s*=\s*['"]([^'"]*proxylist_at_[^'"]*)['"]'''
         page = await self.get('https://webanetlabs.net/publ/24')
+        if not page:
+            return
         urls = [
             'https://webanetlabs.net%s' % path for path in re.findall(exp, page)
         ]
@@ -225,6 +229,8 @@ class Checkerproxy_net(Provider):
     async def _pipe(self):
         exp = r'''href\s*=\s*['"](/archive/\d{4}-\d{2}-\d{2})['"]'''
         page = await self.get('https://checkerproxy.net/')
+        if not page:
+            return
         urls = [
             'https://checkerproxy.net/api%s' % path
             for path in re.findall(exp, page)
@@ -244,6 +250,8 @@ class Proxz_com(Provider):
         )  # noqa
         url = 'http://www.proxz.com/proxy_list_high_anonymous_0.html'
         page = await self.get(url)
+        if not page:
+            return
         urls = [
             'http://www.proxz.com/%s' % path for path in re.findall(exp, page)
         ]
@@ -264,6 +272,8 @@ class Proxy_list_org(Provider):
         exp = r'''href\s*=\s*['"]\./([^'"]?index\.php\?p=\d+[^'"]*)['"]'''
         url = 'http://proxy-list.org/english/index.php?p=1'
         page = await self.get(url)
+        if not page:
+            return
         urls = [
             'http://proxy-list.org/english/%s' % path
             for path in re.findall(exp, page)
@@ -272,31 +282,31 @@ class Proxy_list_org(Provider):
         await self._find_on_pages(urls)
 
 
-class Aliveproxy_com(Provider):
-    # more: http://www.aliveproxy.com/socks-list/socks5.aspx/United_States-us
-    domain = 'aliveproxy.com'
-
-    async def _pipe(self):
-        paths = [
-            'socks5-list',
-            'high-anonymity-proxy-list',
-            'anonymous-proxy-list',
-            'fastest-proxies',
-            'us-proxy-list',
-            'gb-proxy-list',
-            'fr-proxy-list',
-            'de-proxy-list',
-            'jp-proxy-list',
-            'ca-proxy-list',
-            'ru-proxy-list',
-            'proxy-list-port-80',
-            'proxy-list-port-81',
-            'proxy-list-port-3128',
-            'proxy-list-port-8000',
-            'proxy-list-port-8080',
-        ]
-        urls = ['http://www.aliveproxy.com/%s/' % path for path in paths]
-        await self._find_on_pages(urls)
+# class Aliveproxy_com(Provider):
+#     # more: http://www.aliveproxy.com/socks-list/socks5.aspx/United_States-us
+#     domain = 'aliveproxy.com'
+#
+#     async def _pipe(self):
+#         paths = [
+#             'socks5-list',
+#             'high-anonymity-proxy-list',
+#             'anonymous-proxy-list',
+#             'fastest-proxies',
+#             'us-proxy-list',
+#             'gb-proxy-list',
+#             'fr-proxy-list',
+#             'de-proxy-list',
+#             'jp-proxy-list',
+#             'ca-proxy-list',
+#             'ru-proxy-list',
+#             'proxy-list-port-80',
+#             'proxy-list-port-81',
+#             'proxy-list-port-3128',
+#             'proxy-list-port-8000',
+#             'proxy-list-port-8080',
+#         ]
+#         urls = ['http://www.aliveproxy.com/%s/' % path for path in paths]
+#         await self._find_on_pages(urls)
 
 
 # редиректит хуй поми кудаъ
@@ -306,6 +316,8 @@ class Maxiproxies_com(Provider):
     async def _pipe(self):
         exp = r'''<a href\s*=\s*['"]([^'"]*example[^'"#]*)['"]>'''
         page = await self.get('http://maxiproxies.com/category/proxy-lists/')
+        if not page:
+            return
         urls = re.findall(exp, page)
         await self._find_on_pages(urls)
 
@@ -316,6 +328,8 @@ class _50kproxies_com(Provider):
     async def _pipe(self):
         exp = r'''<a href\s*=\s*['"]([^'"]*-proxy-list-[^'"#]*)['"]>'''
         page = await self.get('http://50kproxies.com/category/proxy-list/')
+        if not page:
+            return
         urls = re.findall(exp, page)
         await self._find_on_pages(urls)
 
@@ -326,6 +340,8 @@ class Proxylist_me(Provider):
     async def _pipe(self):
         exp = r'''href\s*=\s*['"][^'"]*/?page=(\d+)['"]'''
         page = await self.get('https://proxylist.me/')
+        if not page:
+            return
         lastId = max([int(n) for n in re.findall(exp, page)])
         urls = ['https://proxylist.me/?page=%d' % n for n in range(lastId)]
         await self._find_on_pages(urls)
@@ -503,6 +519,8 @@ class Proxynova_com(Provider):
     async def _pipe(self):
         expCountries = r'"([a-z]{2})"'
         page = await self.get('https://www.proxynova.com/proxy-server-list/')
+        if not page:
+            return
         tpl = 'https://www.proxynova.com/proxy-server-list/country-%s/'
         urls = [
             tpl % isoCode
@@ -548,6 +566,8 @@ class Spys_ru(Provider):
         expSession = r"'([a-z0-9]{32})'"
         url = 'http://spys.one/proxies/'
         page = await self.get(url)
+        if not page:
+            return
         sessionId = re.findall(expSession, page)[0]
         data = {
             'xf0': sessionId,  # session id
@@ -574,6 +594,8 @@ class My_proxy_com(Provider):
         exp = r'''href\s*=\s*['"]([^'"]?free-[^'"]*)['"]'''
         url = 'https://www.my-proxy.com/free-proxy-list.html'
         page = await self.get(url)
+        if not page:
+            return
         urls = [
             'https://www.my-proxy.com/%s' % path
             for path in re.findall(exp, page)
@@ -666,17 +688,17 @@ class Proxyb_net(Provider):
         await self._find_on_pages(urls)
 
 
-class Proxylistplus_com(Provider):
-    domain = 'list.proxylistplus.com'
-
-    async def _pipe(self):
-        names = ['Fresh-HTTP-Proxy', 'SSL', 'Socks']
-        urls = [
-            'http://list.proxylistplus.com/%s-List-%d' % (i, n)
-            for i in names
-            for n in range(1, 7)
-        ]
-        await self._find_on_pages(urls)
+# class Proxylistplus_com(Provider):
+#     domain = 'list.proxylistplus.com'
+#
+#     async def _pipe(self):
+#         names = ['Fresh-HTTP-Proxy', 'SSL', 'Socks']
+#         urls = [
+#             'http://list.proxylistplus.com/%s-List-%d' % (i, n)
+#             for i in names
+#             for n in range(1, 7)
+#         ]
+#         await self._find_on_pages(urls)
 
 
 class Proxylist_download(Provider):
@@ -702,6 +724,82 @@ class ProxyProvider(Provider):
 
 
 PROVIDERS = [
+    Provider(
+        url='https://api.proxyscrape.com/?request=getproxies&proxytype=http',
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    ),
+    Provider(
+        url='https://api.proxyscrape.com/?request=getproxies&proxytype=socks4',
+        proto=('SOCKS4'),
+    ),
+    Provider(
+        url='https://api.proxyscrape.com/?request=getproxies&proxytype=socks5',
+        proto=('SOCKS5'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-socks4.txt',
+        proto=('SOCKS4'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-socks5.txt',
+        proto=('SOCKS5'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-http.txt',
+        proto=('HTTP'),
+    ),
+    Provider(
+        url='https://www.proxyscan.io/download?type=socks4',
+        proto=('SOCKS4'),
+    ),
+    Provider(
+        url='https://www.proxyscan.io/download?type=socks5',
+        proto=('SOCKS5'),
+    ),
+    Provider(
+        url='https://www.proxyscan.io/download?type=http',
+        proto=('HTTP'),
+    ),
+    Provider(
+        url='https://api.openproxylist.xyz/socks4.txt',
+        proto=('SOCKS4'),
+    ),
+    Provider(
+        url='https://api.openproxylist.xyz/socks5.txt',
+        proto=('SOCKS5'),
+    ),
+    Provider(
+        url='https://api.openproxylist.xyz/http.txt',
+        proto=('HTTP'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks4.txt',
+        proto=('SOCKS4'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks5.txt',
+        proto=('SOCKS5'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/http.txt',
+        proto=('HTTP'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks4.txt',
+        proto=('SOCKS4'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks5.txt',
+        proto=('SOCKS5'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt',
+        proto=('HTTP'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/clarketm/proxy-list/master/proxy-list-raw.txt',
+        proto=('HTTP'),
+    ),
     Provider(
         url='http://www.proxylists.net/',
         proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
@@ -731,7 +829,7 @@ PROVIDERS = [
         proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
     ),  # 200
     Provider(
-        url='http://fineproxy.org/eng/fresh-proxies/',
+        url='https://t.me/s/proxiesfine',
         proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
     ),  # 5500
     Provider(url='https://socks-proxy.net/', proto=('SOCKS4', 'SOCKS5')),  # 80
@@ -764,9 +862,9 @@ PROVIDERS = [
     ),  # noqa; 140
     Xseo_in(proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25')),  # noqa; 240
     Spys_ru(proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25')),  # noqa; 660
-    Proxylistplus_com(
-        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25')
-    ),  # noqa; 450
+    # Proxylistplus_com(
+    #     proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25')
+    # ),  # noqa; 450
     Proxylist_me(
         proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25')
     ),  # noqa; 2872
@@ -782,16 +880,16 @@ PROVIDERS = [
     Blogspot_com(
         proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25')
     ),  # noqa; 24800
-    Gatherproxy_com_socks(proto=('SOCKS4', 'SOCKS5')),  # noqa; 30
-    Blogspot_com_socks(proto=('SOCKS4', 'SOCKS5')),  # noqa; 1486
-    Tools_rosinstrument_com(
-        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25')
-    ),  # noqa; 4000
-    Tools_rosinstrument_com_socks(proto=('SOCKS4', 'SOCKS5')),  # noqa; 1800
+    # Gatherproxy_com_socks(proto=('SOCKS4', 'SOCKS5')),  # noqa; 30
+    # Blogspot_com_socks(proto=('SOCKS4', 'SOCKS5')),  # noqa; 1486
+    # Tools_rosinstrument_com(
+    #     proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25')
+    # ),  # noqa; 4000
+    # Tools_rosinstrument_com_socks(proto=('SOCKS4', 'SOCKS5')),  # noqa; 1800
     My_proxy_com(max_conn=2),  # noqa; 1000
     Checkerproxy_net(),  # noqa; 60000
-    Aliveproxy_com(),  # noqa; 210
-    Freeproxylists_com(),  # noqa; 1338
+    # Aliveproxy_com(),  # noqa; 210
+    # Freeproxylists_com(),  # noqa; 1338
     Webanetlabs_net(),  # noqa; 5000
     Maxiproxies_com(),  # noqa; 430
     Proxylist_download(),  # noqa; 35590
