@@ -32,7 +32,7 @@ Usage
 
 .. code-block:: bash
 
-    python proxy_broker.py find --types HTTP HTTPS SOCKS4 SOCKS5 --limit 100000 --countries RU
+    proxybroker find --types HTTP HTTPS SOCKS4 SOCKS5 --limit 100000 --countries RU --outfile proxies.txt
     
 .. |ss| raw:: html
 
