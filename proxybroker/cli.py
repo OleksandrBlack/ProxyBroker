@@ -4,8 +4,12 @@ import argparse
 import asyncio
 import json
 import logging
+import selectors
+import sys
 import sys
 from contextlib import contextmanager
+
+import select
 
 from . import __version__ as version
 from .api import Broker
@@ -364,7 +368,41 @@ async def handle(proxies, outfile, format):
             is_first = False
 
 
+# https://github.com/python/asyncio/pull/419
+def _select(self, r, w, _, timeout=None):
+    try:
+        r, w, x = select.select(r, w, w, timeout)
+        return r, w + x, []
+    except OSError:
+        stale_fds = []
+        for fd in r:
+            try:
+                select.select([fd], [], [], timeout)
+            except OSError:
+                stale_fds.append(fd)
+        for fd in w:
+            try:
+                select.select([], [fd], [fd], timeout)
+            except OSError:
+                stale_fds.append(fd)
+        for fd in stale_fds:
+            if fd in r:
+                r.remove(fd)
+            if fd in w:
+                w.remove(fd)
+            self.unregister(fd)
+
+        # If all fds were stale, then we don't need to try again.
+        if not r | w:
+            return [], [], []
+
+        return self._select(r, w, [], timeout)
+    
+
 def cli(args=sys.argv[1:]):
+    if sys.platform == 'win32':
+        selectors.SelectSelector._select = _select
+
     parser = create_parser()
     ns = parser.parse_args(args)
 
