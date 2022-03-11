@@ -16,57 +16,34 @@ ProxyBroker is an open source tool that asynchronously finds public proxies from
 
 .. image:: https://raw.githubusercontent.com/constverum/ProxyBroker/master/docs/source/_static/index_find_example.gif
 
-Install
+Installation
 -------
 
-```shell
-# Or simply install python 3.6.13
-conda create --name py36 python=3.6.13
-conda activate py36
-
-pip install --upgrade setuptools git+https://github.com/PXEiYyMH8F/ProxyBroker.git
-```
-
-Features
---------
-
-* Finds more than 7000 working proxies from ~50 sources.
-* Support protocols: HTTP(S), SOCKS4/5. Also CONNECT method to ports 80 and 23 (SMTP).
-* Proxies may be filtered by type, anonymity level, response time, country and status in DNSBL.
-* Work as a proxy server that distributes incoming requests to external proxies. With automatic proxy rotation.
-* All proxies are checked to support Cookies and Referer (and POST requests if required).
-* Automatically removes duplicate proxies.
-* Is asynchronous.
-
-.. * Save found proxies to a file in custom format.
-
-Requirements
-------------
-
-* Python **3.5** or higher
-* `aiohttp <https://pypi.python.org/pypi/aiohttp>`_
-* `aiodns <https://pypi.python.org/pypi/aiodns>`_
-* `maxminddb <https://pypi.python.org/pypi/maxminddb>`_
-
-
-Installation
-------------
-
-To install last stable release from pypi:
-
 .. code-block:: bash
 
-    $ pip install proxybroker
-
-The latest development version can be installed directly from GitHub:
-
-.. code-block:: bash
-
-    $ pip install -U git+https://github.com/constverum/ProxyBroker.git
-
+    # Or simply install python 3.6.13
+    conda create --name py36 python=3.6.13
+    conda activate py36
+    
+    pip install --upgrade setuptools git+https://github.com/PXEiYyMH8F/ProxyBroker.git
 
 Usage
 -----
+
+.. code-block:: bash
+
+    python proxy_broker.py find --types HTTP HTTPS SOCKS4 SOCKS5 --limit 100000 --countries RU
+    
+.. |ss| raw:: html
+
+    <strike>
+
+.. |se| raw:: html
+
+    </strike>
+
+|ss| Usage |se|
+---------------
 
 
 CLI Examples
@@ -141,6 +118,26 @@ Find and show 10 working HTTP(S) proxies:
 
 `More examples <https://proxybroker.readthedocs.io/en/latest/examples.html>`_.
 
+Features
+--------
+
+* Finds more than 7000 working proxies from ~50 sources.
+* Support protocols: HTTP(S), SOCKS4/5. Also CONNECT method to ports 80 and 23 (SMTP).
+* Proxies may be filtered by type, anonymity level, response time, country and status in DNSBL.
+* Work as a proxy server that distributes incoming requests to external proxies. With automatic proxy rotation.
+* All proxies are checked to support Cookies and Referer (and POST requests if required).
+* Automatically removes duplicate proxies.
+* Is asynchronous.
+
+.. * Save found proxies to a file in custom format.
+
+Requirements
+------------
+
+* Python **3.5** or higher
+* `aiohttp <https://pypi.python.org/pypi/aiohttp>`_
+* `aiodns <https://pypi.python.org/pypi/aiodns>`_
+* `maxminddb <https://pypi.python.org/pypi/maxminddb>`_
 
 Documentation
 -------------
