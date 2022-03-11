@@ -15,7 +15,7 @@ REQUIRES = [
     'aiohttp>=3.5.4',
     'aiodns>=2.0.0',
     'attrs==19.1.0',
-    'maxminddb>=1.4.1',
+    'maxminddb==1.5.4',
 ]
 SETUP_REQUIRES = ['pytest-runner>=4.4']
 TEST_REQUIRES = [
