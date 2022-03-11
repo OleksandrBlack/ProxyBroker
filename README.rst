@@ -16,6 +16,16 @@ ProxyBroker is an open source tool that asynchronously finds public proxies from
 
 .. image:: https://raw.githubusercontent.com/constverum/ProxyBroker/master/docs/source/_static/index_find_example.gif
 
+Install
+-------
+
+```shell
+# Or simply install python 3.6.13
+conda create --name py36 python=3.6.13
+conda activate py36
+
+pip install --upgrade setuptools git+https://github.com/PXEiYyMH8F/ProxyBroker.git
+```
 
 Features
 --------
