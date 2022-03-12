@@ -135,7 +135,8 @@ class Provider:
         try:
             timeout = aiohttp.ClientTimeout(total=self._timeout)
             async with self._sem_provider, self._session.request(
-                method, url, data=data, headers=headers, timeout=timeout
+                method, url, data=data, headers=headers, timeout=timeout,
+                # proxy='http://localhost:8888'  # for Fiddler
             ) as resp:
                 page = await resp.text()
                 if resp.status != 200:
