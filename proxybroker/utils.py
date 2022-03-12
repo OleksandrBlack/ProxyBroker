@@ -39,8 +39,8 @@ IPPortPatternGlobal = re.compile(
 def get_headers(rv=False):
     _rv = str(random.randint(1000, 9999)) if rv else ''
     headers = {
-        # 'User-Agent': 'Mozilla/5.0 (X11; U; Linux i386; ru-RU; rv:2.0) Gecko/20100625 Firefox/3.5.11',  # noqa
-        'User-Agent': 'PxBroker/%s/%s' % (version, _rv),
+        'User-Agent': 'Mozilla/5.0 (X11; U; Linux i386; ru-RU; rv:2.0) Gecko/20100625 Firefox/3.5.11',  # noqa
+        # 'User-Agent': 'PxBroker/%s/%s' % (version, _rv),
         'Accept': '*/*',
         'Accept-Encoding': 'gzip, deflate',
         'Pragma': 'no-cache',
