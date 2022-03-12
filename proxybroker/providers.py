@@ -351,50 +351,50 @@ class Foxtools_ru(Provider):
         await self._find_on_pages(urls)
 
 
-class Gatherproxy_com(Provider):
-    domain = 'gatherproxy.com'
-    _pattern_h = re.compile(
-        r'''(?P<ip>(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?))'''  # noqa
-        r'''(?=.*?(?:(?:(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?))|'(?P<port>[\d\w]+)'))''',  # noqa
-        flags=re.DOTALL,
-    )
-
-    def find_proxies(self, page):
-        # if 'gp.dep' in page:
-        #     proxies = self._pattern_h.findall(page)  # for http(s)
-        #     proxies = [(host, str(int(port, 16)))
-        #                for host, port in proxies if port]
-        # else:
-        #     proxies = self._find_proxies(page)  # for socks
-        return [
-            (host, str(int(port, 16)))
-            for host, port in self._pattern_h.findall(page)
-            if port
-        ]
-
-    async def _pipe(self):
-        url = 'http://www.gatherproxy.com/proxylist/anonymity/'
-        expNumPages = r'href="#(\d+)"'
-        method = 'POST'
-        # hdrs = {'Content-Type': 'application/x-www-form-urlencoded'}
-        urls = []
-        for t in ['anonymous', 'elite']:
-            data = {'Type': t, 'PageIdx': 1}
-            page = await self.get(url, data=data, method=method)
-            if not page:
-                continue
-            lastPageId = max([int(n) for n in re.findall(expNumPages, page)])
-            urls = [
-                {
-                    'url': url,
-                    'data': {'Type': t, 'PageIdx': pid},
-                    'method': method,
-                }
-                for pid in range(1, lastPageId + 1)
-            ]
-        # urls.append({'url': 'http://www.gatherproxy.com/sockslist/',
-        #              'method': method})
-        await self._find_on_pages(urls)
+# class Gatherproxy_com(Provider):
+#     domain = 'gatherproxy.com'
+#     _pattern_h = re.compile(
+#         r'''(?P<ip>(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?))'''  # noqa
+#         r'''(?=.*?(?:(?:(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?))|'(?P<port>[\d\w]+)'))''',  # noqa
+#         flags=re.DOTALL,
+#     )
+# 
+#     def find_proxies(self, page):
+#         # if 'gp.dep' in page:
+#         #     proxies = self._pattern_h.findall(page)  # for http(s)
+#         #     proxies = [(host, str(int(port, 16)))
+#         #                for host, port in proxies if port]
+#         # else:
+#         #     proxies = self._find_proxies(page)  # for socks
+#         return [
+#             (host, str(int(port, 16)))
+#             for host, port in self._pattern_h.findall(page)
+#             if port
+#         ]
+# 
+#     async def _pipe(self):
+#         url = 'http://www.gatherproxy.com/proxylist/anonymity/'
+#         expNumPages = r'href="#(\d+)"'
+#         method = 'POST'
+#         # hdrs = {'Content-Type': 'application/x-www-form-urlencoded'}
+#         urls = []
+#         for t in ['anonymous', 'elite']:
+#             data = {'Type': t, 'PageIdx': 1}
+#             page = await self.get(url, data=data, method=method)
+#             if not page:
+#                 continue
+#             lastPageId = max([int(n) for n in re.findall(expNumPages, page)])
+#             urls = [
+#                 {
+#                     'url': url,
+#                     'data': {'Type': t, 'PageIdx': pid},
+#                     'method': method,
+#                 }
+#                 for pid in range(1, lastPageId + 1)
+#             ]
+#         # urls.append({'url': 'http://www.gatherproxy.com/sockslist/',
+#         #              'method': method})
+#         await self._find_on_pages(urls)
 
 
 # class Gatherproxy_com_socks(Provider):
@@ -860,9 +860,9 @@ PROVIDERS = [
     Foxtools_ru(
         proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'), max_conn=1
     ),  # noqa; 500
-    Gatherproxy_com(
-        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25')
-    ),  # noqa; 3212
+    # Gatherproxy_com(
+    #     proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25')
+    # ),  # noqa; 3212
     Nntime_com(
         proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25')
     ),  # noqa; 1050
@@ -903,4 +903,8 @@ PROVIDERS = [
     # Proxynova_com(proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25')), # 818
     # _50kproxies_com(),  # 822
     # Free_proxy_cz(),  # 420
+    Provider(
+        url='https://raw.githubusercontent.com/Arriven/db1000n/main/proxylist.json',
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25', 'SOCKS4', 'SOCKS5'),
+    )  # a lot
 ]
