@@ -563,8 +563,8 @@ class Spys_ru(Provider):
             return
         sessionId = re.findall(expSession, page)[0]
         data = {
-            'xf0': sessionId,  # session id
-            'xpp': 3,  # 3 - 200 proxies on page
+            'xx0': sessionId,  # session id
+            'xpp': 5,  # 5 - 500 proxies on page
             'xf1': None,
         }  # 1 = ANM & HIA; 3 = ANM; 4 = HIA
         method = 'POST'
@@ -817,10 +817,10 @@ PROVIDERS = [
     #     url='https://us-proxy.org/',
     #     proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
     # ),  # 200
-    # Provider(
-    #     url='https://t.me/s/proxiesfine',  # todo
-    #     proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
-    # ),  # 5500
+    Provider(
+        url='https://t.me/s/proxiesfine',  # todo
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    ),  # 5500
     Provider(url='https://socks-proxy.net/', proto=('SOCKS4', 'SOCKS5')),  # 80
     Provider(
         url='http://www.httptunnel.ge/ProxyListForFree.aspx',
