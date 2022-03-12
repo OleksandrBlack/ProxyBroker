@@ -2,6 +2,7 @@ import asyncio
 import re
 import warnings
 from base64 import b64decode
+from datetime import datetime
 from html import unescape
 from math import sqrt
 from urllib.parse import unquote, urlparse
@@ -716,7 +717,13 @@ class ProxyProvider(Provider):
         super().__init__(*args, **kwargs)
 
 
+now = datetime.now()
+
 PROVIDERS = [
+    Provider(
+        url=f'https://checkerproxy.net/api/archive/{now.year}-{now.month:02d}-{now.day-1:02d}',
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25', 'SOCKS4', 'SOCKS5'),
+    ),
     Provider(
         url='https://api.proxyscrape.com/?request=getproxies&proxytype=http',
         proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
