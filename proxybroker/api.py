@@ -198,6 +198,7 @@ class Broker:
             task = asyncio.ensure_future(self._grab(types, check=True))
         tasks.append(task)
         self._all_tasks.extend(tasks)
+        # await asyncio.gather(*tasks)  # for debug (_done will raise CancelledError)
 
     def serve(self, host='127.0.0.1', port=8888, limit=100, **kwargs):
         """Start a local proxy server.
