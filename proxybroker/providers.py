@@ -724,11 +724,11 @@ PROVIDERS = [
     ),
     Provider(
         url='https://raw.githubusercontent.com/human1ty/proxy/main/socks5.txt',
-        proto=('SOCKS5'),
+        proto=('SOCKS5',),
     ),
     Provider(
         url='https://raw.githubusercontent.com/human1ty/proxy/main/socks4.txt',
-        proto=('SOCKS4'),
+        proto=('SOCKS4',),
     ),
     Provider(
         url='https://pastebin.com/raw/vQzZ8CwG',
@@ -744,11 +744,11 @@ PROVIDERS = [
     ),
     Provider(
         url='https://raw.githubusercontent.com/mmpx12/proxy-list/master/socks4.txt',
-        proto=('SOCKS4'),
+        proto=('SOCKS4',),
     ),
     Provider(
         url='https://raw.githubusercontent.com/mmpx12/proxy-list/master/socks5.txt',
-        proto=('SOCKS5'),
+        proto=('SOCKS5',),
     ),
     Provider(
         url='https://raw.githubusercontent.com/mmpx12/proxy-list/master/https.txt',
@@ -768,15 +768,15 @@ PROVIDERS = [
     ),
     Provider(
         url='https://www.my-proxy.com/free-socks-4-proxy.html',
-        proto=('SOCKS4'),
+        proto=('SOCKS4',),
     ),
     Provider(
         url='https://www.my-proxy.com/free-socks-5-proxy.html',
-        proto=('SOCKS5'),
+        proto=('SOCKS5',),
     ),
     Provider(
         url='https://spys.me/socks.txt',
-        proto=('SOCKS5'),
+        proto=('SOCKS5',),
     ),
     Provider(
         url='https://raw.githubusercontent.com/UserR3X/proxy-list/main/online/http+s.txt',
@@ -784,23 +784,23 @@ PROVIDERS = [
     ),
     Provider(
         url='https://raw.githubusercontent.com/UserR3X/proxy-list/main/online/socks5.txt',
-        proto=('SOCKS5'),
+        proto=('SOCKS5',),
     ),
     Provider(
         url='https://raw.githubusercontent.com/UserR3X/proxy-list/main/online/socks4.txt',
-        proto=('SOCKS4'),
+        proto=('SOCKS4',),
     ),
     Provider(
         url='https://raw.githubusercontent.com/manuGMG/proxy-365/main/SOCKS5.txt',
-        proto=('SOCKS5'),
+        proto=('SOCKS5',),
     ),
     Provider(
         url='https://raw.githubusercontent.com/hookzof/socks5_list/master/proxy.txt',
-        proto=('SOCKS5'),
+        proto=('SOCKS5',),
     ),
     Provider(
         url='https://www.freeproxychecker.com/result/socks4_proxies.txt',
-        proto=('SOCKS4'),
+        proto=('SOCKS4',),
     ),
     Provider(
         url='https://raw.githubusercontent.com/roosterkid/openproxylist/main/HTTPS_RAW.txt',
@@ -808,7 +808,7 @@ PROVIDERS = [
     ),
     Provider(
         url='https://raw.githubusercontent.com/roosterkid/openproxylist/main/SOCKS4_RAW.txt',
-        proto=('SOCKS4'),
+        proto=('SOCKS4',),
     ),
     Provider(
         url='https://openproxy.space/list/http',
@@ -816,11 +816,11 @@ PROVIDERS = [
     ),
     Provider(
         url='https://openproxy.space/list/socks5',
-        proto=('SOCKS5'),
+        proto=('SOCKS5',),
     ),
     Provider(
         url='https://openproxy.space/list/socks4',
-        proto=('SOCKS4'),
+        proto=('SOCKS4',),
     ),
     Provider(
         url='https://api.proxyscrape.com/?request=getproxies&proxytype=http',
@@ -828,75 +828,75 @@ PROVIDERS = [
     ),
     Provider(
         url='https://api.proxyscrape.com/?request=getproxies&proxytype=socks4',
-        proto=('SOCKS4'),
+        proto=('SOCKS4',),
     ),
     Provider(
         url='https://api.proxyscrape.com/?request=getproxies&proxytype=socks5',
-        proto=('SOCKS5'),
+        proto=('SOCKS5',),
     ),
     Provider(
         url='https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-socks4.txt',
-        proto=('SOCKS4'),
+        proto=('SOCKS4',),
     ),
     Provider(
         url='https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-socks5.txt',
-        proto=('SOCKS5'),
+        proto=('SOCKS5',),
     ),
     Provider(
         url='https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-http.txt',
-        proto=('HTTP'),
+        proto=('HTTP',),
     ),
     Provider(
         url='https://www.proxyscan.io/download?type=socks4',
-        proto=('SOCKS4'),
+        proto=('SOCKS4',),
     ),
     Provider(
         url='https://www.proxyscan.io/download?type=socks5',
-        proto=('SOCKS5'),
+        proto=('SOCKS5',),
     ),
     Provider(
         url='https://www.proxyscan.io/download?type=http',
-        proto=('HTTP'),
+        proto=('HTTP',),
     ),
     Provider(
         url='https://api.openproxylist.xyz/socks4.txt',
-        proto=('SOCKS4'),
+        proto=('SOCKS4',),
     ),
     Provider(
         url='https://api.openproxylist.xyz/socks5.txt',
-        proto=('SOCKS5'),
+        proto=('SOCKS5',),
     ),
     Provider(
         url='https://api.openproxylist.xyz/http.txt',
-        proto=('HTTP'),
+        proto=('HTTP',),
     ),
     Provider(
         url='https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks4.txt',
-        proto=('SOCKS4'),
+        proto=('SOCKS4',),
     ),
     Provider(
         url='https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks5.txt',
-        proto=('SOCKS5'),
+        proto=('SOCKS5',),
     ),
     Provider(
         url='https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/http.txt',
-        proto=('HTTP'),
+        proto=('HTTP',),
     ),
     Provider(
         url='https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks4.txt',
-        proto=('SOCKS4'),
+        proto=('SOCKS4',),
     ),
     Provider(
         url='https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks5.txt',
-        proto=('SOCKS5'),
+        proto=('SOCKS5',),
     ),
     Provider(
         url='https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt',
-        proto=('HTTP'),
+        proto=('HTTP',),
     ),
     Provider(
         url='https://raw.githubusercontent.com/clarketm/proxy-list/master/proxy-list-raw.txt',
-        proto=('HTTP'),
+        proto=('HTTP',),
     ),
     Provider(
         url='http://ipaddress.com/proxy-list/',
