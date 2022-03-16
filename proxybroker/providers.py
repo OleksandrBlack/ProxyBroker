@@ -304,16 +304,16 @@ class Proxy_list_org(Provider):
 
 
 # редиректит хуй поми кудаъ
-class Maxiproxies_com(Provider):
-    domain = 'maxiproxies.com'
-
-    async def _pipe(self):
-        exp = r'''<a href\s*=\s*['"]([^'"]*example[^'"#]*)['"]>'''
-        page = await self.get('http://maxiproxies.com/category/proxy-lists/')
-        if not page:
-            return
-        urls = re.findall(exp, page)
-        await self._find_on_pages(urls)
+# class Maxiproxies_com(Provider):
+#     domain = 'maxiproxies.com'
+#
+#     async def _pipe(self):
+#         exp = r'''<a href\s*=\s*['"]([^'"]*example[^'"#]*)['"]>'''
+#         page = await self.get('http://maxiproxies.com/category/proxy-lists/')
+#         if not page:
+#             return
+#         urls = re.findall(exp, page)
+#         await self._find_on_pages(urls)
 
 
 # class _50kproxies_com(Provider):
@@ -328,17 +328,17 @@ class Maxiproxies_com(Provider):
 #         await self._find_on_pages(urls)
 
 
-class Proxylist_me(Provider):
-    domain = 'proxylist.me'
-
-    async def _pipe(self):
-        exp = r'''href\s*=\s*['"][^'"]*/?page=(\d+)['"]'''
-        page = await self.get('https://proxylist.me/')
-        if not page:
-            return
-        lastId = max([int(n) for n in re.findall(exp, page)])
-        urls = ['https://proxylist.me/?page=%d' % n for n in range(lastId)]
-        await self._find_on_pages(urls)
+# class Proxylist_me(Provider):
+#     domain = 'proxylist.me'
+#
+#     async def _pipe(self):
+#         exp = r'''href\s*=\s*['"][^'"]*/?page=(\d+)['"]'''
+#         page = await self.get('https://proxylist.me/')
+#         if not page:
+#             return
+#         lastId = max([int(n) for n in re.findall(exp, page)])
+#         urls = ['https://proxylist.me/?page=%d' % n for n in range(lastId)]
+#         await self._find_on_pages(urls)
 
 
 class Foxtools_ru(Provider):
@@ -725,6 +725,90 @@ PROVIDERS = [
         proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25', 'SOCKS4', 'SOCKS5'),
     ),
     Provider(
+        url='https://raw.githubusercontent.com/sunny9577/proxy-scraper/master/proxies.txt',
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/mmpx12/proxy-list/master/socks4.txt',
+        proto=('SOCKS4'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/mmpx12/proxy-list/master/socks5.txt',
+        proto=('SOCKS5'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/mmpx12/proxy-list/master/https.txt',
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/mmpx12/proxy-list/master/http.txt',
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/hendrikbgr/Free-Proxy-Repo/master/proxy_list.txt',
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/almroot/proxylist/master/list.txt',
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    ),
+    Provider(
+        url='https://www.my-proxy.com/free-socks-4-proxy.html',
+        proto=('SOCKS4'),
+    ),
+    Provider(
+        url='https://www.my-proxy.com/free-socks-5-proxy.html',
+        proto=('SOCKS5'),
+    ),
+    Provider(
+        url='https://spys.me/socks.txt',
+        proto=('SOCKS5'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/UserR3X/proxy-list/main/online/http+s.txt',
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/UserR3X/proxy-list/main/online/socks5.txt',
+        proto=('SOCKS5'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/UserR3X/proxy-list/main/online/socks4.txt',
+        proto=('SOCKS4'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/manuGMG/proxy-365/main/SOCKS5.txt',
+        proto=('SOCKS5'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/hookzof/socks5_list/master/proxy.txt',
+        proto=('SOCKS5'),
+    ),
+    Provider(
+        url='https://www.freeproxychecker.com/result/socks4_proxies.txt',
+        proto=('SOCKS4'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/roosterkid/openproxylist/main/HTTPS_RAW.txt',
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/roosterkid/openproxylist/main/SOCKS4_RAW.txt',
+        proto=('SOCKS4'),
+    ),
+    Provider(
+        url='https://openproxy.space/list/http',
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    ),
+    Provider(
+        url='https://openproxy.space/list/socks5',
+        proto=('SOCKS5'),
+    ),
+    Provider(
+        url='https://openproxy.space/list/socks4',
+        proto=('SOCKS4'),
+    ),
+    Provider(
         url='https://api.proxyscrape.com/?request=getproxies&proxytype=http',
         proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
     ),
@@ -812,10 +896,10 @@ PROVIDERS = [
     #     url='https://freshfreeproxylist.wordpress.com/',
     #     proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
     # ),  # 50
-    Provider(
-        url='http://proxytime.ru/http',
-        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
-    ),  # 1400
+    # Provider(
+    #     url='http://proxytime.ru/http',
+    #     proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    # ),  # 1400
     Provider(
         url='https://free-proxy-list.net/',
         proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
@@ -825,7 +909,7 @@ PROVIDERS = [
     #     proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
     # ),  # 200
     Provider(
-        url='https://t.me/s/proxiesfine',  # todo
+        url='https://t.me/s/proxiesfine',
         proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
     ),  # 5500
     Provider(url='https://socks-proxy.net/', proto=('SOCKS4', 'SOCKS5')),  # 80
@@ -837,10 +921,10 @@ PROVIDERS = [
     #     url='http://cn-proxy.com/',
     #     proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
     # ),  # 70
-    Provider(
-        url='https://hugeproxies.com/home/',
-        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
-    ),  # 800
+    # Provider(
+    #     url='https://hugeproxies.com/home/',
+    #     proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    # ),  # 800
     # Provider(
     #     url='http://proxy.rufey.ru/',
     #     proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
@@ -861,9 +945,9 @@ PROVIDERS = [
     # Proxylistplus_com(
     #     proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25')
     # ),  # noqa; 450
-    Proxylist_me(
-        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25')
-    ),  # noqa; 2872
+    # Proxylist_me(
+    #     proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25')
+    # ),  # noqa; 2872
     Foxtools_ru(
         proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'), max_conn=1
     ),  # noqa; 500
@@ -887,7 +971,7 @@ PROVIDERS = [
     # Aliveproxy_com(),  # noqa; 210
     # Freeproxylists_com(),  # noqa; 1338
     Webanetlabs_net(),  # noqa; 5000
-    Maxiproxies_com(),  # noqa; 430
+    # Maxiproxies_com(),  # noqa; 430
     Proxylist_download(),  # noqa; 35590
     # # Bad...
     # http://www.proxylist.ro/
