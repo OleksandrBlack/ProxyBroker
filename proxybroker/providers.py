@@ -2,7 +2,7 @@ import asyncio
 import re
 import warnings
 from base64 import b64decode
-from datetime import datetime
+from datetime import datetime, timedelta
 from html import unescape
 from math import sqrt
 from urllib.parse import unquote, urlparse
@@ -717,11 +717,25 @@ class ProxyProvider(Provider):
         super().__init__(*args, **kwargs)
 
 
-now = datetime.now()
-
 PROVIDERS = [
     Provider(
-        url=f'https://checkerproxy.net/api/archive/{now.year}-{now.month:02d}-{now.day-1:02d}',
+        url='https://raw.githubusercontent.com/human1ty/proxy/main/http.txt',
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/human1ty/proxy/main/socks5.txt',
+        proto=('SOCKS5'),
+    ),
+    Provider(
+        url='https://raw.githubusercontent.com/human1ty/proxy/main/socks4.txt',
+        proto=('SOCKS4'),
+    ),
+    Provider(
+        url='https://pastebin.com/raw/vQzZ8CwG',
+        proto=('SOCKS4', 'SOCKS5'),
+    ),
+    Provider(
+        url=f'https://checkerproxy.net/api/archive/{(datetime.now() - timedelta(days=1)).date()}',
         proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25', 'SOCKS4', 'SOCKS5'),
     ),
     Provider(
