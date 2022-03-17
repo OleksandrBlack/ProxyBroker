@@ -27,6 +27,13 @@ Installation
     
     pip install --upgrade setuptools git+https://github.com/PXEiYyMH8F/ProxyBroker.git
 
+Debug
+-----
+
+If you do not want to lose exception in asyncio tasks uncomment ``await asyncio.gather(*tasks)`` in api.py:Broker.find 
+
+If you want to sniff requests in Fiddler, uncomment ``proxy='http://localhost:8888'`` in providers.py:Provider._get
+
 Usage
 -----
 
