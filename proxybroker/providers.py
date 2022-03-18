@@ -207,7 +207,7 @@ class Webanetlabs_net(Provider):
     domain = 'webanetlabs.net'
 
     async def _pipe(self):
-        exp = r'''href\s*=\s*['"]([^'"]*proxylist_at_[^'"]*)['"]'''
+        exp = r'''href\s*=\s*['"]([^'"]*proxylist2022[^'"]*)['"]'''
         page = await self.get('https://webanetlabs.net/publ/24')
         if not page:
             return
@@ -351,6 +351,16 @@ class Foxtools_ru(Provider):
         ]
         await self._find_on_pages(urls)
 
+
+class proxyservers_pro(Provider):
+    domain = 'premproxy.com'
+
+    async def _pipe(self):
+        urls = [
+            'https://premproxy.com/list/ip-port/%d.htm' % n
+            for n in range(1, 20)
+        ]
+        await self._find_on_pages(urls)
 
 # class Gatherproxy_com(Provider):
 #     domain = 'gatherproxy.com'
@@ -717,7 +727,58 @@ class ProxyProvider(Provider):
         super().__init__(*args, **kwargs)
 
 
+class FileProvider(Provider):
+    async def _pipe(self):
+        with open(self.url, 'r') as f:
+            self.proxies = self.find_proxies(f.read())
+
+
 PROVIDERS = [
+    proxyservers_pro(),
+    Provider(
+        url='https://www.proxydocker.com/en/proxylist/type/connect25',
+        proto=('CONNECT:25',),
+    ),
+    Provider(
+        url='https://www.proxydocker.com/en/proxylist/type/connect80',
+        proto=('CONNECT:80',),
+    ),
+    Provider(
+        url='https://www.proxydocker.com/en/socks4-list/',
+        proto=('SOCKS4',),
+    ),
+    Provider(
+        url='https://www.proxydocker.com/en/socks5-list/',
+        proto=('SOCKS5',),
+    ),
+    Provider(
+        url='https://www.proxydocker.com/en/proxylist/type/http-https',
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    ),
+    Provider(
+        url='https://premiumproxy.net/http-proxy-list',
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    ),
+    Provider(
+        url='https://premiumproxy.net/https-ssl-proxy-list',
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    ),
+    Provider(
+        url='https://premiumproxy.net/socks-proxy-list',
+        proto=('SOCKS4', 'SOCKS5'),
+    ),
+    Provider(
+        url='https://proxypremium.top/http-proxy-list',
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    ),
+    Provider(
+        url='https://proxypremium.top/https-ssl-proxy-list',
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    ),
+    Provider(
+        url='https://proxypremium.top/socks-proxy-list',
+        proto=('SOCKS4', 'SOCKS5'),
+    ),
     Provider(
         url='https://raw.githubusercontent.com/human1ty/proxy/main/http.txt',
         proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
@@ -732,6 +793,14 @@ PROVIDERS = [
     ),
     Provider(
         url='https://pastebin.com/raw/vQzZ8CwG',
+        proto=('SOCKS4', 'SOCKS5'),
+    ),
+    Provider(
+        url='https://pastebin.com/raw/vLN81LDa',
+        proto=('SOCKS4', 'SOCKS5'),
+    ),
+    Provider(
+        url='https://pastebin.com/raw/1DeAN3xi',
         proto=('SOCKS4', 'SOCKS5'),
     ),
     Provider(
@@ -776,7 +845,11 @@ PROVIDERS = [
     ),
     Provider(
         url='https://spys.me/socks.txt',
-        proto=('SOCKS5',),
+        proto=('SOCKS4', 'SOCKS5'),
+    ),
+    Provider(
+        url='http://spys.me/proxy.txt',
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
     ),
     Provider(
         url='https://raw.githubusercontent.com/UserR3X/proxy-list/main/online/http+s.txt',
@@ -914,10 +987,6 @@ PROVIDERS = [
     #     url='http://proxytime.ru/http',
     #     proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
     # ),  # 1400
-    Provider(
-        url='https://free-proxy-list.net/',
-        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
-    ),  # 300
     # Provider(
     #     url='https://us-proxy.org/',
     #     proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
@@ -926,7 +995,30 @@ PROVIDERS = [
         url='https://t.me/s/proxiesfine',
         proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
     ),  # 5500
-    Provider(url='https://socks-proxy.net/', proto=('SOCKS4', 'SOCKS5')),  # 80
+    Provider(
+        url='https://free-proxy-list.net/',
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    ),
+    Provider(
+        url='https://free-proxy-list.net/anonymous-proxy.html', 
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    ),  # pair to free-proxy-list.net
+    Provider(
+        url='https://free-proxy-list.net/uk-proxy.html', 
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    ),  # pair to free-proxy-list.net
+    Provider(
+        url='https://www.us-proxy.org/', 
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    ),  # pair to free-proxy-list.net
+    Provider(
+        url='https://www.sslproxies.org/', 
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
+    ),  # pair to free-proxy-list.net
+    Provider(
+        url='https://socks-proxy.net/', 
+        proto=('SOCKS4', 'SOCKS5'),
+    ),  # pair to free-proxy-list.net
     Provider(
         url='http://www.httptunnel.ge/ProxyListForFree.aspx',
         proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25'),
