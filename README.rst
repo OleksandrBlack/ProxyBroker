@@ -31,7 +31,7 @@ Installation
     conda create --name py36 python=3.6.13
     conda activate py36
     
-    pip install --upgrade setuptools git+https://github.com/PXEiYyMH8F/ProxyBroker.git
+    pip install --upgrade setuptools git+https://github.com/OleksandrBlack/proxybroker.git
 
 Debug
 -----
