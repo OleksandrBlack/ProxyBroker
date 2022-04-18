@@ -899,7 +899,17 @@ PROVIDERS = [
         url='https://raw.githubusercontent.com/monosans/proxy-list/main/proxies/socks5.txt',
         proto=('SOCKS5'),
     ),
-    
+#uashield
+	Provider(
+        url='https://raw.githubusercontent.com/opengs/uashieldtargets/master/proxy.json',
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25', 'SOCKS4', 'SOCKS5'),
+    ),
+#mhddos 
+	Provider(
+        url='https://raw.githubusercontent.com/porthole-ascend-cinnamon/proxy_scraper/main/proxies.txt',
+        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25', 'SOCKS4', 'SOCKS5'),
+    ),
+
     Proxy_list_org(
         proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25')
     ),  # noqa; 140
@@ -917,9 +927,5 @@ PROVIDERS = [
     My_proxy_com(max_conn=2),  # noqa; 1000
     Checkerproxy_net(),  # noqa; 60000
     Webanetlabs_net(),  # noqa; 5000
-    Proxylist_download(),  # noqa; 35590
-    Provider(
-        url='https://raw.githubusercontent.com/Arriven/db1000n/main/proxylist.json',
-        proto=('HTTP', 'CONNECT:80', 'HTTPS', 'CONNECT:25', 'SOCKS4', 'SOCKS5'),
-    )  # a lot
+    Proxylist_download()
 ]
